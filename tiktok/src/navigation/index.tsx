@@ -11,7 +11,10 @@ function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Root">
-        <Stack.Screen name="Root" component={Main}></Stack.Screen>
+        <Stack.Screen
+          name="Root"
+          component={Main}
+          options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,7 +9,7 @@ export const getVideos = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     // server request
 
-    const zeroOrOneNum = Math.floor(Math.random() * 2);
+    const zeroOrOneNum = Math.floor(Math.random() * 3);
     const serverWorkSimulation = Boolean(zeroOrOneNum);
     if (serverWorkSimulation) {
       return videos.videos;

@@ -1,0 +1,22 @@
+{
+  "videos": [
+    {
+      "id": "v1",
+      "url": {
+        "uri": "/Users/mac_book/Desktop/monkey/tiktok/assets/video/pigeon.mp4"
+      }
+    },
+    {
+      "id": "v2",
+      "url": {
+        "uri": "/Users/mac_book/Desktop/monkey/tiktok/assets/video/figures.mp4"
+      }
+    },
+    {
+      "id": "v3",
+      "url": {
+        "uri": "/Users/mac_book/Desktop/monkey/tiktok/assets/video/pigeon.mp4"
+      }
+    }
+  ]
+}

@@ -2,14 +2,17 @@ import 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Provider } from 'react-redux';
 
 import Navigation from './src/navigation';
+import store from './src/redux';
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <Navigation />
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
     </SafeAreaProvider>
   );
 };

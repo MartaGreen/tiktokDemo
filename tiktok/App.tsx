@@ -1,13 +1,16 @@
 import 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
+
+import Navigation from './src/navigation';
 
 const App = () => {
   return (
-    <View>
-      <Text>Test text</Text>
-    </View>
+    <SafeAreaProvider>
+      <Navigation />
+    </SafeAreaProvider>
   );
 };
 

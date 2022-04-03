@@ -1,6 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { REQUEST_STATUS } from '../../constants/requests.constants';
-import { IVideo } from '../../interfaces-types/videos.interface';
+import {
+  IVideo,
+  IVideoInitialState,
+} from '../../interfaces-types/videos.interface';
 
 import videos from '../../data/videos.json';
 
@@ -9,10 +12,16 @@ export const getVideos = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     // server request
 
-    const zeroOrOneNum = Math.floor(Math.random() * 3);
-    const serverWorkSimulation = Boolean(zeroOrOneNum);
+    // const zeroOrOneNum = Math.floor(Math.random() * 3);
+    // const serverWorkSimulation = Boolean(zeroOrOneNum);
+    const serverWorkSimulation: boolean = true;
     if (serverWorkSimulation) {
-      return videos.videos;
+      const videosData = videos.videos.map(video => {
+        const updateVideo = Object.assign(video);
+        updateVideo['isPaused'] = true;
+        return updateVideo;
+      });
+      return videosData;
     } else {
       return rejectWithValue('Server error');
     }
@@ -24,8 +33,19 @@ const videosSlice = createSlice({
   initialState: {
     status: '',
     videos: [] as IVideo[],
+    viewableIndex: 0,
   },
-  reducers: {},
+  reducers: {
+    changeViewableItem: (state: IVideoInitialState, action) => {
+      const prevIndex: number = state.viewableIndex;
+      state.videos[prevIndex].isPaused = true;
+      const index: number = action.payload;
+      state.videos[index].isPaused = false;
+      state.viewableIndex = index;
+
+      console.log(current(state.videos));
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getVideos.pending, state => {
       state.status = REQUEST_STATUS.pending;
@@ -40,4 +60,5 @@ const videosSlice = createSlice({
   },
 });
 
+export const { changeViewableItem } = videosSlice.actions;
 export default videosSlice.reducer;

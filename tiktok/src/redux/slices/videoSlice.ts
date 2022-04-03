@@ -45,6 +45,11 @@ const videosSlice = createSlice({
 
       console.log(current(state.videos));
     },
+    paused: state => {
+      const index: number = state.viewableIndex;
+      const viewableVideoIsPaused = state.videos[index].isPaused;
+      state.videos[index].isPaused = !viewableVideoIsPaused;
+    },
   },
   extraReducers: builder => {
     builder.addCase(getVideos.pending, state => {
@@ -60,5 +65,5 @@ const videosSlice = createSlice({
   },
 });
 
-export const { changeViewableItem } = videosSlice.actions;
+export const { changeViewableItem, paused } = videosSlice.actions;
 export default videosSlice.reducer;

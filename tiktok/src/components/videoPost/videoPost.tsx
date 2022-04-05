@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import { IStore } from '../../interfaces-types/store.interface';
@@ -19,13 +19,15 @@ function VideoPost({ data }: { data: IVideo }) {
       <TouchableWithoutFeedback onPress={() => pausedVideo()}>
         <Video
           source={data.url}
-          resizeMode={'cover'}
+          resizeMode="cover"
           style={styles.video}
           paused={data.isPaused}
           repeat={true}
           onError={e => console.log(e)}
         />
       </TouchableWithoutFeedback>
+
+      <Text>text</Text>
     </View>
   );
 }

@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
-import { IStore } from '../../interfaces-types/store.interface';
 import { IVideo } from '../../interfaces-types/videos.interface';
-import { paused } from '../../redux/slices/videoSlice';
+import { changeViewableItem, paused } from '../../redux/slices/videoSlice';
 
 import styles from './videoPost.style';
 
-function VideoPost({ data }: { data: IVideo }) {
+const video = require('../../../assets/video/figures.mp4');
+console.log('video', video);
+
+function VideoPost({
+  data,
+  index,
+  endScroll,
+}: {
+  data: IVideo;
+  index: number;
+  endScroll: (index: number) => void;
+}) {
   const dispatch = useDispatch();
   const pausedVideo = () => {
     dispatch(paused());
@@ -24,6 +35,11 @@ function VideoPost({ data }: { data: IVideo }) {
           paused={data.isPaused}
           repeat={true}
           onError={e => console.log(e)}
+          poster="https://baconmockup.com/300/200/"
+          onEnd={() => {
+            endScroll(index + 1);
+            dispatch(changeViewableItem(index + 1));
+          }}
         />
       </TouchableWithoutFeedback>
 

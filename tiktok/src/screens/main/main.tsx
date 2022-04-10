@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { Dimensions, FlatList, Text, View, ViewToken } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,15 @@ function Main() {
   const videos: IVideo[] = storeData.videos;
   const dispatch = useDispatch();
 
+  const [flatListRef, setFlatListRef] = useState<FlatList<IVideo> | null>(null);
+
   useEffect(() => {
     dispatch(getVideos());
   }, []);
+
+  const scrollToNext = (index: number) => {
+    flatListRef?.scrollToIndex({ index });
+  };
 
   const onViewableItemsChanged = useRef(({ changed }: any) => {
     const isViewable: boolean = changed[0].isViewable;
@@ -37,12 +43,16 @@ function Main() {
         <FlatList
           data={videos}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <VideoPost data={item} />}
+          renderItem={({ item, index }) => (
+            <VideoPost data={item} index={index} endScroll={scrollToNext} />
+          )}
           snapToInterval={Dimensions.get('window').height}
           snapToAlignment={'start'}
           decelerationRate={'fast'}
           viewabilityConfig={{ viewAreaCoveragePercentThreshold: 99 }}
           onViewableItemsChanged={onViewableItemsChanged.current}
+          ref={ref => setFlatListRef(ref)}
+          onScrollToIndexFailed={err => console.log(err)}
         />
       </View>
     );

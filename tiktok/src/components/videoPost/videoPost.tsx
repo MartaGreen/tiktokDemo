@@ -8,8 +8,7 @@ import { changeViewableItem, paused } from '../../redux/slices/videoSlice';
 
 import styles from './videoPost.style';
 
-const video = require('../../../assets/video/figures.mp4');
-console.log('video', video);
+// const video = require('../../../assets/video/figures.mp4');
 
 function VideoPost({
   data,
@@ -37,8 +36,10 @@ function VideoPost({
           onError={e => console.log(e)}
           poster="https://baconmockup.com/300/200/"
           onEnd={() => {
-            endScroll(index + 1);
-            dispatch(changeViewableItem(index + 1));
+            if (index <= 3) {
+              endScroll(index + 1);
+              dispatch(changeViewableItem(index + 1));
+            }
           }}
         />
       </TouchableWithoutFeedback>

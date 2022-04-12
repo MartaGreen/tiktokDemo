@@ -6,6 +6,7 @@ import {
 } from '../../interfaces-types/videos.interface';
 
 import videos from '../../data/videos.json';
+import getVideosRequest from '../../requests/videoRequests';
 
 export const getVideos = createAsyncThunk(
   'users/get',
@@ -14,6 +15,7 @@ export const getVideos = createAsyncThunk(
 
     // const zeroOrOneNum = Math.floor(Math.random() * 3);
     // const serverWorkSimulation = Boolean(zeroOrOneNum);
+    console.log(await getVideosRequest());
     const serverWorkSimulation: boolean = true;
     if (serverWorkSimulation) {
       const videosData = videos.videos.map(video => {
@@ -43,7 +45,7 @@ const videosSlice = createSlice({
       state.videos[index].isPaused = false;
       state.viewableIndex = index;
 
-      console.log(current(state.videos));
+      // console.log(current(state.videos));
     },
     paused: state => {
       const index: number = state.viewableIndex;

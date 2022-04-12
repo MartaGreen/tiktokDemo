@@ -1,21 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
-import { Dimensions, FlatList, Text, View, ViewToken } from 'react-native';
+import { Dimensions, FlatList, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_STATUS } from '../../constants/requests.constants';
 import { IStore } from '../../interfaces-types/store.interface';
-import { IVideo } from '../../interfaces-types/videos.interface';
-import { getVideos, changeViewableItem } from '../../redux/slices/videoSlice';
+import { IPost } from '../../interfaces-types/videos.interface';
+import { getVideos, changeViewableItem } from '../../redux/slices/postsSlice';
 
 import VideoPost from '../../components/videoPost/videoPost';
 
 function Main() {
-  const storeData = useSelector((state: IStore) => state.videos);
-  const status: string = storeData.status;
-  const videos: IVideo[] = storeData.videos;
   const dispatch = useDispatch();
+  const storeData = useSelector((state: IStore) => state.posts);
+  const status: string = storeData.status;
+  const videos: IPost[] = storeData.posts;
 
-  const [flatListRef, setFlatListRef] = useState<FlatList<IVideo> | null>(null);
+  const [flatListRef, setFlatListRef] = useState<FlatList<IPost> | null>(null);
 
   useEffect(() => {
     dispatch(getVideos());
@@ -33,7 +33,7 @@ function Main() {
     }
   });
 
-  if (status === REQUEST_STATUS.pending) {
+  if (status === REQUEST_STATUS.pending || !status) {
     return <Text>Getting data ...</Text>;
   } else if (status === REQUEST_STATUS.error) {
     return <Text>Oops, something went wrong!</Text>;

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import videosRedcuer from './slices/videoSlice';
+import postsReducer from './slices/postsSlice';
 
 const store = configureStore({
   reducer: {
-    videos: videosRedcuer,
+    posts: postsReducer,
   },
 });
 

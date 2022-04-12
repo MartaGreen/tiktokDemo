@@ -5,4 +5,4 @@ export const REQUEST_STATUS = {
 };
 
 export const REQUEST_URL = 'https://pexelsdimasv1.p.rapidapi.com/videos/search';
-export const RESULTS_PER_PAGE = 15;
+export const RESULTS_PER_PAGE = 10;

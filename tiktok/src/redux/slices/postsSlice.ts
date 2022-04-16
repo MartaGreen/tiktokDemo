@@ -11,7 +11,10 @@ import getVideosRequest from '../../requests/videoRequests';
 
 export const getVideos = createAsyncThunk(
   'users/get',
-  async (pageNum: number, { rejectWithValue }) => {
+  async (
+    { pageNum, searchedValue }: { pageNum: number; searchedValue: string },
+    { rejectWithValue },
+  ) => {
     // server request
 
     // const zeroOrOneNum = Math.floor(Math.random() * 3);
@@ -29,11 +32,19 @@ export const getVideos = createAsyncThunk(
     // }
 
     // const videos: IVideoRequest = await getVideosRequest();
-    const videos: IVideoRequest = await getVideosRequest(pageNum);
-    return {
-      page: videos.page,
-      posts: videos.videos,
-    };
+    const videos: IVideoRequest | null = await getVideosRequest(
+      pageNum,
+      searchedValue,
+    );
+
+    if (videos) {
+      return {
+        page: videos.page,
+        posts: videos.videos,
+      };
+    } else {
+      return rejectWithValue('Server error while getting data ...');
+    }
   },
 );
 
@@ -44,6 +55,7 @@ const postsSlice = createSlice({
     posts: [] as IPost[],
     viewableIndex: 0,
     page: 1,
+    searchedValue: '',
   },
   reducers: {
     changeViewableItem: (state: IVideoInitialState, action) => {
@@ -60,6 +72,13 @@ const postsSlice = createSlice({
     },
     updatePage: state => {
       state.page += 1;
+    },
+    updateRequest: (state, action) => {
+      state.status = '';
+      state.posts = [];
+      state.viewableIndex = 0;
+      state.page = 1;
+      state.searchedValue = action.payload;
     },
   },
   extraReducers: builder => {
@@ -80,5 +99,6 @@ const postsSlice = createSlice({
   },
 });
 
-export const { changeViewableItem, paused, updatePage } = postsSlice.actions;
+export const { changeViewableItem, paused, updatePage, updateRequest } =
+  postsSlice.actions;
 export default postsSlice.reducer;

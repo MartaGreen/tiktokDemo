@@ -9,6 +9,7 @@ export interface IVideoInitialState {
   posts: IPost[];
   viewableIndex: number;
   page: number;
+  searchedValue: string;
 }
 
 export interface IVideoRequest {

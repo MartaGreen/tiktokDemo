@@ -11,7 +11,7 @@ import getVideosRequest from '../../requests/videoRequests';
 
 export const getVideos = createAsyncThunk(
   'users/get',
-  async (_, { rejectWithValue }) => {
+  async (pageNum: number, { rejectWithValue }) => {
     // server request
 
     // const zeroOrOneNum = Math.floor(Math.random() * 3);
@@ -29,7 +29,7 @@ export const getVideos = createAsyncThunk(
     // }
 
     // const videos: IVideoRequest = await getVideosRequest();
-    const videos: IVideoRequest = await getVideosRequest();
+    const videos: IVideoRequest = await getVideosRequest(pageNum);
     return {
       page: videos.page,
       posts: videos.videos,
@@ -43,7 +43,7 @@ const postsSlice = createSlice({
     status: '',
     posts: [] as IPost[],
     viewableIndex: 0,
-    page: 0,
+    page: 1,
   },
   reducers: {
     changeViewableItem: (state: IVideoInitialState, action) => {
@@ -52,13 +52,14 @@ const postsSlice = createSlice({
       const index: number = action.payload;
       state.posts[index].isPaused = false;
       state.viewableIndex = index;
-
-      // console.log(current(state.videos));
     },
     paused: state => {
       const index: number = state.viewableIndex;
       const viewableVideoIsPaused = state.posts[index].isPaused;
       state.posts[index].isPaused = !viewableVideoIsPaused;
+    },
+    updatePage: state => {
+      state.page += 1;
     },
   },
   extraReducers: builder => {
@@ -67,11 +68,11 @@ const postsSlice = createSlice({
     });
     builder.addCase(getVideos.fulfilled, (state, action) => {
       state.status = REQUEST_STATUS.succes;
-      state.posts = action.payload.posts;
+      state.posts.push(...action.payload.posts);
 
-      const pageNum: number = action.payload.page;
-      const currentPageNum: number = state.page;
-      state.page = currentPageNum < pageNum ? pageNum : currentPageNum;
+      // const pageNum: number = action.payload.page;
+      // const currentPageNum: number = state.page;
+      // state.page = currentPageNum < pageNum ? pageNum : currentPageNum;
     });
     builder.addCase(getVideos.rejected, state => {
       state.status = REQUEST_STATUS.error;
@@ -79,5 +80,5 @@ const postsSlice = createSlice({
   },
 });
 
-export const { changeViewableItem, paused } = postsSlice.actions;
+export const { changeViewableItem, paused, updatePage } = postsSlice.actions;
 export default postsSlice.reducer;

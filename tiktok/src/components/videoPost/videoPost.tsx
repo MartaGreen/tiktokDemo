@@ -43,12 +43,13 @@ function VideoPost({
           poster={data.image}
           onEnd={() => {
             const countOfLoadedPosts: number = RESULTS_PER_PAGE * pageNum;
-            if (index >= countOfLoadedPosts - 1) {
+            if (index < countOfLoadedPosts - 1) {
+              endScroll(index + 1);
+              dispatch(changeViewableItem(index + 1));
+            } else {
               console.log('auto scroll new data ...');
               dispatch(updatePage());
             }
-            endScroll(index + 1);
-            dispatch(changeViewableItem(index + 1));
           }}
         />
       </TouchableWithoutFeedback>

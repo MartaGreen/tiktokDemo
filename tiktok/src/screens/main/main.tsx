@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import RequestMsg from '../../components/requestMsg/requestMsg';
 import { IStore } from '../../interfaces-types/store.interface';
 import { IPost } from '../../interfaces-types/videos.interface';
-import postsSlice, {
+import {
   getVideos,
   changeViewableItem,
   updatePage,
@@ -31,6 +31,9 @@ function Main() {
   useEffect(() => {
     if (searchedValue.length > 0) {
       dispatch(getVideos({ pageNum, searchedValue }));
+    }
+    if (pageNum > 1) {
+      dispatch(changeViewableItem(videos.length));
     }
   }, [pageNum, searchedValue]);
 

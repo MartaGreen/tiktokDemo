@@ -14,11 +14,13 @@ import {
 import styles from './main.style';
 import VideoPost from '../../components/videoPost/videoPost';
 import SearchField from '../../components/searchField/searchField';
+import { REQUEST_STATUS } from '../../constants/requests.constants';
 
 function Main() {
   const [flatListRef, setFlatListRef] = useState<FlatList<IPost | null> | null>(
     null,
   );
+  const [postIsUpdated, setPostIsUpdated] = useState(false);
 
   const dispatch = useDispatch();
   const storeData = useSelector((state: IStore) => state.posts);
@@ -27,15 +29,22 @@ function Main() {
   const posts: (IPost | null)[] = [...videos, null];
   const pageNum: number = storeData.page;
   const searchedValue: string = storeData.searchedValue;
+  const viewableIndex: number = storeData.viewableIndex;
 
   useEffect(() => {
     if (searchedValue.length > 0) {
       dispatch(getVideos({ pageNum, searchedValue }));
-    }
-    if (pageNum > 1) {
-      dispatch(changeViewableItem(videos.length));
+      setPostIsUpdated(true);
     }
   }, [pageNum, searchedValue]);
+
+  useEffect(() => {
+    if (postIsUpdated && status === REQUEST_STATUS.succes) {
+      dispatch(changeViewableItem(viewableIndex + 1));
+      autoScrollToNext(viewableIndex);
+      setPostIsUpdated(false);
+    }
+  }, [postIsUpdated, status]);
 
   const autoScrollToNext = (index: number) => {
     flatListRef?.scrollToIndex({ index });

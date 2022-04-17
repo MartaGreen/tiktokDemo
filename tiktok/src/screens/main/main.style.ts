@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
   posts: {
     height: '90%',
   },
+
+  requestMsg: {
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
 });
 
 export default styles;

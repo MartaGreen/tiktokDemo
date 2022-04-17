@@ -59,7 +59,6 @@ const postsSlice = createSlice({
   },
   reducers: {
     changeViewableItem: (state: IVideoInitialState, action) => {
-      console.log('change viewabl item', state.posts, action.payload);
       const prevIndex: number = state.viewableIndex;
       state.posts[prevIndex].isPaused = true;
       const index: number = action.payload;
@@ -89,8 +88,6 @@ const postsSlice = createSlice({
     builder.addCase(getVideos.fulfilled, (state, action) => {
       state.status = REQUEST_STATUS.succes;
       state.posts.push(...action.payload.posts);
-
-      console.log('update videos', action.payload.posts);
 
       // const pageNum: number = action.payload.page;
       // const currentPageNum: number = state.page;

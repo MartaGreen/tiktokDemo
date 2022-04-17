@@ -76,7 +76,11 @@ function Main() {
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => {
             if (item === null) {
-              return <RequestMsg status={status} />;
+              return (
+                <View style={styles.requestMsg}>
+                  <RequestMsg status={status} />
+                </View>
+              );
             } else {
               return (
                 <VideoPost

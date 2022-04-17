@@ -7,6 +7,13 @@ import { Provider } from 'react-redux';
 import Navigation from './src/navigation';
 import store from './src/redux';
 
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  'ViewPropTypes will be removed',
+  'ColorPropType will be removed',
+]);
+
 const App = () => {
   return (
     <SafeAreaProvider>

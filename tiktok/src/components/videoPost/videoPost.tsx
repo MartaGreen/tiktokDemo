@@ -13,8 +13,6 @@ import { RESULTS_PER_PAGE } from '../../constants/requests.constants';
 import styles from './videoPost.style';
 import { IStore } from '../../interfaces-types/store.interface';
 
-// const video = require('../../../assets/video/figures.mp4');
-
 function VideoPost({
   data,
   index,

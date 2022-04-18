@@ -14,7 +14,6 @@ async function getVideosRequest(pageNum: number, searchValue: string) {
       ['per_page', RESULTS_PER_PAGE],
       ['page', pageNum],
     );
-    console.log(url);
     const videosResponse: Response = await fetch(url, {
       headers: {
         Authorization: PEXEL_API_KEYS['2'],

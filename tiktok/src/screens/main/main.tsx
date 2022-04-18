@@ -41,12 +41,13 @@ function Main() {
   useEffect(() => {
     if (postIsUpdated && status === REQUEST_STATUS.succes) {
       dispatch(changeViewableItem(viewableIndex + 1));
-      autoScrollToNext(viewableIndex);
+      autoScrollToNext(viewableIndex + 1);
       setPostIsUpdated(false);
     }
   }, [postIsUpdated, status]);
 
   const autoScrollToNext = (index: number) => {
+    console.log('auto scroll', index, flatListRef?.props.data);
     flatListRef?.scrollToIndex({ index });
   };
 
@@ -60,7 +61,7 @@ function Main() {
 
   const loadNewPosts = () => {
     if (videos.length > 1) {
-      console.log('loading new data ...');
+      // console.log('loading new data ...');
       dispatch(updatePage());
     }
   };

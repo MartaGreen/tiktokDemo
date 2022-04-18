@@ -17,7 +17,7 @@ function RequestMsg({ status }: { status: string }) {
 
 const styles = StyleSheet.create({
   animation: {
-    width: 100,
+    width: 200,
     height: 200,
   },
 });

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 
   requestMsg: {
-    height: 200,
+    height: 150,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
